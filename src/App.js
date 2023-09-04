@@ -1,23 +1,41 @@
-import logo from './logo.svg';
+import { useEffect, useState } from "react"
 import './App.css';
+import cookie from './cookie.png';
 
 function App() {
+
+  const initialChislo = parseInt(localStorage.getItem('chislo')) || 0;
+
+  const [chislo, setChislo] = useState(initialChislo);
+
+  function clickImg() {
+    if (chislo >= 10) {
+      setChislo(chislo + 2);
+    } else {
+      setChislo(chislo + 1);
+    }
+  }
+
+  function clickbutton() {
+    if (chislo >= 10) {
+      setChislo(chislo + 2);
+    }
+  }
+
+  useEffect(() => {
+    localStorage.setItem('chislo', chislo);
+  }, [chislo]);
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <div>
+        <h2>Кликай печеньку</h2>
+        <img className='image' id='img-cookie' src={cookie} onClick={clickImg} />
+        <div>
+          <h3>Печенек: {chislo}</h3>
+          <button className='button' onClick={clickbutton}>Upgrade</button>
+        </div>
+      </div>
     </div>
   );
 }
